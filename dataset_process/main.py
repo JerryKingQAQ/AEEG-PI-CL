@@ -1,7 +1,6 @@
 # -*- coding = utf-8 -*-
 # @File : main.py
 # @Software : PyCharm
-# @Author : Jiarui Jin
 from dataset_process.preprocess import preprocess_main
 from dataset_process.split_train_test_files import split_train_test_files
 
