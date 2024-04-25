@@ -40,7 +40,7 @@ def split_train_test_files(cross_trial=True):
     files = sorted(files, key=custom_sort)
 
     for file in files:
-        data = np.load(files_path + file, allow_pickle=True).item()
+        data = np.load(os.path.join(files_path, file), allow_pickle=True).item()
         for emotion in emotions:
             emo_data_all[emotion].append(data[emotion])
             id_labels_all[emotion].append(data['id'])
