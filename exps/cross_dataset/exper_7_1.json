@@ -1,0 +1,31 @@
+{
+  "prefix": "reproduce",
+  "dataset": "thu_seed_pi",
+  "memory_size": 160,
+  "memory_per_class": 10,
+  "fixed_memory": true,
+  "shuffle": true,
+  "init_cls": 5,
+  "increment": 5,
+  "num_classes": 30,
+  "cls_model": [
+    "icarl"
+  ],
+  "backbone_type": [
+    "MDCAT"
+  ],
+  "device": [
+    "0"
+  ],
+  "seed": -1,
+  "repeat": 25,
+  "random_seed": true,
+  "emotion": [
+    "Neutral",
+    "Negative",
+    "Positive"
+  ],
+  "test_form": "cross_trial",
+  "frequency": "all",
+  "file_name": "exper_6_1"
+}

@@ -1,0 +1,29 @@
+{
+    "prefix": "reproduce",
+    "dataset": "thuPI",
+    "memory_size": 160,
+    "memory_per_class": 10,
+    "fixed_memory": true,
+    "shuffle": true,
+    "init_cls": 10,
+    "increment": 10,
+    "num_classes": 80,
+    "cls_model": [
+        "icarl"
+    ],
+    "backbone_type": [
+        "CBAM_BiLSTM"
+    ],
+    "device": [
+        "0"
+    ],
+    "seed": -1,
+    "repeat": 25,
+    "random_seed": true,
+    "emotion": [
+        "neutral"
+    ],
+    "test_form": "cross_trial",
+    "frequency": "gamma",
+    "file_name": "exper_4_11"
+}
