@@ -38,7 +38,7 @@ Install the required dependencies:
 pip install -r requirements.txt
 ```
 
-### Run experiment
+### Run experiments
 
 1. Edit the `[Experiment Name].json` file for global settings.
 2. Edit the hyperparameters in the corresponding `[Model Name].py` file (e.g., `models/icarl.py`).
