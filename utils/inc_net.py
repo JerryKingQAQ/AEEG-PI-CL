@@ -4,26 +4,25 @@ import logging
 import torch
 from torch import nn
 
-from backbone.CADCNN import CADCNN
-from backbone.CAT import CAT
-from backbone.CBAM_CNN_LSTM import CBAM_BiLSTM
-from backbone.CIT_NET import CIT_NET
-from backbone.DCNN import DCNN
-from backbone.AITST import AITST
-from backbone.MD_CAT_Jointed import MD_CAT_Jointed
-from backbone.TFAT import TFAT
-from backbone.TSception import TSception
-from backbone.bigru import BiGRU
-from backbone.GTNet import GTNet
-from backbone.cifar_resnet import resnet32
-from backbone.CNN_GRU import CGRU
-from backbone.CNN_LSTM import CLSTM
-from backbone.MD_CAT import MD_CAT
-from backbone.linears import SimpleLinear, SplitCosineLinear, CosineLinear
-from backbone.lstm import LSTM
-from backbone.mlp import MLP
-from backbone.transformer import OriTransformer
-from backbone.CTFAT import CTFAT
+from backbones.CADCNN import CADCNN
+from backbones.CAT import CAT
+from backbones.CBAM_CNN_LSTM import CBAM_BiLSTM
+from backbones.CIT_NET import CIT_NET
+from backbones.DCNN import DCNN
+from backbones.AITST import AITST
+from backbones.MD_CAT_Jointed import MD_CAT_Jointed
+from backbones.TFAT import TFAT
+from backbones.TSception import TSception
+from backbones.bigru import BiGRU
+from backbones.GTNet import GTNet
+from backbones.CNN_GRU import CGRU
+from backbones.CNN_LSTM import CLSTM
+from backbones.MD_CAT import MD_CAT
+from backbones.linears import SimpleLinear, SplitCosineLinear, CosineLinear
+from backbones.lstm import LSTM
+from backbones.mlp import MLP
+from backbones.transformer import OriTransformer
+from backbones.CTFAT import CTFAT
 
 
 def get_backbone(args, pretrained=False):

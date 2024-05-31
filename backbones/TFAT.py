@@ -6,10 +6,12 @@ from einops import rearrange, repeat
 from einops.layers.torch import Rearrange
 from torch import nn
 
-from backbone.MD_CA import MDCAEncoder
+from backbones.CA import CAEncoder
 
 
 # helpers
+from backbones.TFA import TFAEncoder
+
 
 def pair(t):
     return t if isinstance(t, tuple) else (t, t)
@@ -92,7 +94,7 @@ class Transformer(nn.Module):
         return x
 
 
-class MD_CAT(nn.Module):
+class TFAT(nn.Module):
     def __init__(self, input_size, patch_size, num_classes, dim, depth, heads, mlp_dim, pool='cls', channels=32,
                  dim_head=64, dropout=0., emb_dropout=0.):
         super().__init__()
@@ -103,7 +105,7 @@ class MD_CAT(nn.Module):
         patch_dim = channels * patch_height * patch_width
         assert pool in {'cls', 'mean'}, 'pool type must be either cls (cls token) or mean (mean pooling)'
 
-        self.MDCAEncoder = MDCAEncoder(depth=depth, channels=channels, dim=input_size[1], hidden_dim=32)
+        self.TFAEncoder = TFAEncoder(depth=depth, channels=channels, dim=6, hidden_dim=32)
 
         self.to_patch_embedding = nn.Sequential(
             Rearrange('b c (h p1) (w p2) -> b (h w) (p1 p2 c)', p1=patch_height, p2=patch_width),
@@ -128,7 +130,7 @@ class MD_CAT(nn.Module):
         )
 
     def forward(self, x):
-        x = self.MDCAEncoder(x)
+        x = self.TFAEncoder(x)
 
         x = self.to_patch_embedding(x)
         b, n, _ = x.shape
@@ -152,7 +154,7 @@ class MD_CAT(nn.Module):
 
 if __name__ == '__main__':
     x = torch.randn((8, 32, 375, 6))
-    model = MD_CAT(input_size=(250, 1), patch_size=(50, 1), num_classes=10, dim=256, depth=4, heads=4,
-                   mlp_dim=256)
+    model = TFAT(input_size=(375, 6), patch_size=(25, 1), num_classes=10, dim=256, depth=4, heads=4,
+                 mlp_dim=256)
     out = model(x)
     print(out['features'].shape)

@@ -1,7 +1,4 @@
 # -*- coding = utf-8 -*-
-# @File : transformer.py
-# @Software : PyCharm
-# -*- coding = utf-8 -*-
 # @File : CTFAT.py
 # @Software : PyCharm
 import torch
@@ -9,7 +6,7 @@ from einops import rearrange, repeat
 from einops.layers.torch import Rearrange
 from torch import nn
 
-from backbone.CTFA import CTFAEncoder
+from backbones.CTFA import CTFAEncoder
 
 
 # helpers
@@ -95,7 +92,7 @@ class Transformer(nn.Module):
         return x
 
 
-class OriTransformer(nn.Module):
+class CTFAT(nn.Module):
     def __init__(self, input_size, patch_size, num_classes, dim, depth, heads, mlp_dim, pool='cls', channels=32,
                  dim_head=64, dropout=0., emb_dropout=0.):
         super().__init__()
@@ -105,6 +102,8 @@ class OriTransformer(nn.Module):
         num_patches = (input_height // patch_height) * (input_width // patch_width)
         patch_dim = channels * patch_height * patch_width
         assert pool in {'cls', 'mean'}, 'pool type must be either cls (cls token) or mean (mean pooling)'
+
+        self.CTFAEncoder = CTFAEncoder(depth=depth, channels=channels, dim=6, hidden_dim=32)
 
         self.to_patch_embedding = nn.Sequential(
             Rearrange('b c (h p1) (w p2) -> b (h w) (p1 p2 c)', p1=patch_height, p2=patch_width),
@@ -129,6 +128,7 @@ class OriTransformer(nn.Module):
         )
 
     def forward(self, x):
+        x = self.CTFAEncoder(x)
 
         x = self.to_patch_embedding(x)
         b, n, _ = x.shape
@@ -152,7 +152,7 @@ class OriTransformer(nn.Module):
 
 if __name__ == '__main__':
     x = torch.randn((8, 32, 375, 6))
-    model = OriTransformer(input_size=(375, 6), patch_size=(25, 1), num_classes=10, dim=256, depth=4, heads=4,
-                           mlp_dim=256)
+    model = CTFAT(input_size=(375, 6), patch_size=(25, 1), num_classes=10, dim=256, depth=4, heads=4,
+                  mlp_dim=256)
     out = model(x)
-    print(out.shape)
+    print(out['features'].shape)

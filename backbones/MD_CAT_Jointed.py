@@ -6,7 +6,7 @@ from einops import rearrange, repeat
 from einops.layers.torch import Rearrange
 from torch import nn
 
-from backbone.CTFA import CTFAEncoder
+from backbones.MD_CA import MDCAEncoder
 
 
 # helpers
@@ -92,7 +92,7 @@ class Transformer(nn.Module):
         return x
 
 
-class CTFAT(nn.Module):
+class MD_CAT_Jointed(nn.Module):
     def __init__(self, input_size, patch_size, num_classes, dim, depth, heads, mlp_dim, pool='cls', channels=32,
                  dim_head=64, dropout=0., emb_dropout=0.):
         super().__init__()
@@ -103,7 +103,7 @@ class CTFAT(nn.Module):
         patch_dim = channels * patch_height * patch_width
         assert pool in {'cls', 'mean'}, 'pool type must be either cls (cls token) or mean (mean pooling)'
 
-        self.CTFAEncoder = CTFAEncoder(depth=depth, channels=channels, dim=6, hidden_dim=32)
+        self.ICTFEncoder = MDCAEncoder(depth=depth, channels=channels, dim=input_size[1], hidden_dim=32)
 
         self.to_patch_embedding = nn.Sequential(
             Rearrange('b c (h p1) (w p2) -> b (h w) (p1 p2 c)', p1=patch_height, p2=patch_width),
@@ -128,7 +128,7 @@ class CTFAT(nn.Module):
         )
 
     def forward(self, x):
-        x = self.CTFAEncoder(x)
+        x = self.ICTFEncoder(x)
 
         x = self.to_patch_embedding(x)
         b, n, _ = x.shape
@@ -143,16 +143,11 @@ class CTFAT(nn.Module):
         x = x.mean(dim=1) if self.pool == 'mean' else x[:, 0]
 
         x = self.to_latent(x)
-        # return self.mlp_head(x)
-
-        return {
-            'features': x
-        }
-
+        return self.mlp_head(x)
 
 if __name__ == '__main__':
     x = torch.randn((8, 32, 375, 6))
-    model = CTFAT(input_size=(375, 6), patch_size=(25, 1), num_classes=10, dim=256, depth=4, heads=4,
-                  mlp_dim=256)
+    model = MD_CAT_Jointed(input_size=(375, 6), patch_size=(15, 1), num_classes=10, dim=256, depth=4, heads=4,
+                   mlp_dim=256)
     out = model(x)
-    print(out['features'].shape)
+    print(out.shape)
