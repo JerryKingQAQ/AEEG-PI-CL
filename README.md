@@ -10,6 +10,8 @@ This repository is the official implementation of the paper "Affective EEG-based
 The THU-EP dataset is not publicly shareable on the internet. You can contact the original authors to obtain the dataset. Additionally, the original authors' team has recently released a publicly accessible affective EEG dataset with over a hundred subjects, called FACED [[URL]](https://www.synapse.org/#!Synapse:syn50614194/wiki/620378). However, please note that the dataset processing code provided in this repository may not be directly applicable to FACED.
 
 
+
+
 ## How To Use
 
 ### Clone
