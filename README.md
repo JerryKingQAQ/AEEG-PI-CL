@@ -68,12 +68,13 @@ If you find the paper or this repo useful, please cite:
 @ARTICLE{10540616,
   author={Jin, Jiarui and Chen, Zongnan and Cai, Honghua and Pan, Jiahui},
   journal={IEEE Transactions on Instrumentation and Measurement}, 
-  title={Affective EEG-based Person Identification with Continual Learning}, 
+  title={Affective EEG-Based Person Identification With Continual Learning}, 
   year={2024},
-  volume={},
+  volume={73},
   number={},
-  pages={1-1},
-  keywords={Identification of persons;Electroencephalography;Continuing education;Brain modeling;Task analysis;Feature extraction;Transformers;Electroencephalogram (EEG);person identification;continual learning;multi-domain coordinated attention mechanism;transformer},
+  pages={1-16},
+  keywords={Identification of persons;Electroencephalography;Continuing education;Brain modeling;Task analysis;Feature extraction;Transformers;Continual learning;electroencephalogram (EEG);multidomain coordinated attention mechanism;person identification;transformer},
   doi={10.1109/TIM.2024.3406836}}
+
 ```
 
