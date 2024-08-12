@@ -37,7 +37,8 @@ To preprocess the data, create a folder named `data` and run the preprocessing c
 
 ```
 mkdir data
-python dataset_process/main.py --files_path 'path/to/THU-EP/'
+cd dataset_process
+python main.py --files_path 'path/to/THU-EP/'
 ```
 
 ### Run experiments
